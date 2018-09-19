@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 var cheerio = require("cheerio");
 var request = require("request");
 var axios = require("axios");
-//var db = require("./models");
+var db = require("./models");
 
 var PORT = 5555;
 
@@ -65,7 +65,7 @@ console.log("[WIP] web scraper [WIP]");
 
 app.listen(PORT, function() {
     console.log("App running on PORT " + PORT + "!");
-})
+});
 
 
 // JUST REQUESTS THAT PUT INTO CLI WITHOUT ROUTES INVOLVED 
