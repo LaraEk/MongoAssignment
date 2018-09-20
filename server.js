@@ -13,11 +13,39 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://locahost/chinanewsdb");
+mongoose.connect("mongodb://localhost/chinanewsdb");
 
 // SCRAPE ROUTE comes first
+// app.get("/scrape", function(req, res) {
+//     request("https://www.scmp.com/frontpage/international", function(error, response, html) {
+//         var $ = cheerio.load(html);
+//         var results = [];
+
+//         $("h3.lvl_25-title").each(function(i, element) {
+//             var title = $(element).text();
+//             var link = $(element).children().attr("href");
+
+//             db.article.create({
+//                 title: title,
+//                 link: link
+//             },
+//             function(err, inserted) {
+//                 if (err) {
+//                     console.log(err);
+//                 } else {
+//                     console.log(inserted);
+//                 }
+//             });
+//         });
+//         console.log(results);
+//     });
+
+// })
+
 app.get("/scrape", function (req, res) {
+    console.log("app.get begun");
     axios.get("https://www.scmp.com/frontpage/international").then(function(response) {
+        console.log("axios.get begun");
         var $ = cheerio.load(response.data);
         var results = [];
 
@@ -42,22 +70,31 @@ app.get("/scrape", function (req, res) {
     });
 });
 
-// request("https://www.scmp.com/frontpage/international", function(error, response, html) {
-//     var $ = cheerio.load(html);
-//     var results = [];
 
-//     $("h3.lvl_25-title").each(function(i, element) {
-//         var title = $(element).text();
-//         var link = $(element).children().attr("href");
+// GET ALL ROUTE 
+app.get("/articles", function(req, res) {
+    db.article.find({})
+        .then(function(dbarticle) {
+            res.json(dbarticle);
+        })
+        .catch(function(error) {
+            res.json(error);
+        });
+});
 
-//         results.push({
-//             title: title,
-//             link: link
-//         });
-//     });
-//     console.log(results);
-// });
+// GET SPECIFIC ARTICLE BY ID & POPULATE IT WITH A NOTE
+app.get("/articles/:id", function (req, res) {
+    db.article.findOne({ _id: req.params.id })
+    .populate("note")
+    .then(function(dbarticle) {
+        res.json(dbarticle);
+    })
+    .catch(function(error) {
+        res.json(error);
+    });
+});
 
+// SAVE/UPDATE THE NOTE FOR AN ARTICLE
 
 
 

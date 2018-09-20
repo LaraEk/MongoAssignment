@@ -1,8 +1,8 @@
 var mongoose = require("mongoose");
 
-var schema = mongoose.Schema;
+var Schema = mongoose.Schema;
 
-var articleschema = new schema({
+var articleschema = new Schema({
     title: {
         type: String,
         required: true
@@ -10,8 +10,12 @@ var articleschema = new schema({
     link: {
         type: String,
         required: true
+    },
+    note: {
+        type: Schema.Types.ObjectId,
+        ref: "note"
     }
-    //I'll add note here in a bit!
+
 });
 
 var article = mongoose.model("article", articleschema);
