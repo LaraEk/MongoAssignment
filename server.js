@@ -58,7 +58,7 @@ app.get("/scrape", function (req, res) {
                 link: link
             });
 
-            db.article.create(result).then(function(dbarticle) {
+            db.article.create(results).then(function(dbarticle) {
                 console.log(dbarticle);
             }).catch(function(error) {
                 return res.json(error);
@@ -66,7 +66,7 @@ app.get("/scrape", function (req, res) {
         });
         console.log(results);
 
-        res.send("scraped");
+        res.send(results);
     });
 });
 
