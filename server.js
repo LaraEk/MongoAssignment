@@ -102,7 +102,16 @@ app.get("/articles/:id", function (req, res) {
 });
 
 // SAVE/UPDATE THE NOTE FOR AN ARTICLE
-
+app.post("/articles/:id", function(req, res) {
+    db.note.create(req.body)
+    .then(function(dbnote) {
+        return db.article.findOneAndUpdate({ _id: req.params.id }, { note: dbnote._id }, { new: true });
+    }).then(function(dbarticle) {
+        res.json(dbarticle);
+    }).catch(function(error) {
+        res.json(error);
+    });
+});
 
 
 console.log("[WIP] web scraper [WIP]");

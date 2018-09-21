@@ -15,10 +15,10 @@ $(document).on("click", "p", function() {
         url: "/articles/" + thisID 
     }).then(function(data) {
         console.log(data);
-        $("notes").append("<h2>" + data.title + "</h2>");
-        $("notes").append("<input id='titleinput' name='title'>");
-        $("notes").append("<textarea id='bodyinput' name='body'></textarea>");
-        $("notes").append("<button data-id='" + data._id + "' id='savenote'>Save Notes</button>");
+        $("#notes").append("<h2>" + data.title + "</h2>");
+        $("#notes").append("<input id='titleinput' name='title'>");
+        $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
+        $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Notes</button>");
 
         if (data.note) {
             $("#titleinput").val(data.note.title);
