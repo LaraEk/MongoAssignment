@@ -15,7 +15,9 @@ app.use(express.static("public"));
 
 mongoose.connect("mongodb://localhost/chinanewsdb");
 
-// SCRAPE ROUTE comes first
+// // SCRAPE ROUTE comes first
+// // note that this one works as well as the axios one below, so we'll use the axios one for now
+// // because yay new library, but I'm going to leave this here as a useful thing. 
 // app.get("/scrape", function(req, res) {
 //     request("https://www.scmp.com/frontpage/international", function(error, response, html) {
 //         var $ = cheerio.load(html);
@@ -39,9 +41,14 @@ mongoose.connect("mongodb://localhost/chinanewsdb");
 //         });
 //         console.log(results);
 //     });
-
 // })
 
+// app.get("/test", function(req, res) {
+//     console.log(res);
+//     res.json("test");
+// });
+
+// SCRAPE ROUTE comes first
 app.get("/scrape", function (req, res) {
     console.log("app.get begun");
     axios.get("https://www.scmp.com/frontpage/international").then(function(response) {
