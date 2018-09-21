@@ -30,4 +30,24 @@ $(document).on("click", "p", function() {
     alert("clicked!");
 });
 
+// SAVING THAT NOTE
+$("document").on("click", "#savenote", function() {
+    var thisID = $(this).attr("data-id");
 
+    $.ajax({
+        method: "POST",
+        url: "/articles/" + thisID,
+        data: {
+            title: $("#titleinput").val(),
+            body: $("#bodyinput").val()
+        }
+    }).then(function(data) {
+        console.log(data);
+        $("#notes").empty();
+    });
+
+    $("#titleinput").val("");
+    $("bodyinput").val("");
+
+    alert("gonna save!");
+});
